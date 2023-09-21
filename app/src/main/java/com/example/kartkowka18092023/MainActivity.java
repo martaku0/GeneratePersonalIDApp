@@ -38,27 +38,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String rokTemp = rok.getText().toString().substring(2,4);
-                String miesiacTemp = miesiac.getText().toString();
-                String dzienTemp = dzien.getText().toString();
-                String plecTemp = plec.getText().toString().toUpperCase();
-                String pesel = "";
-
-                Log.d("res",rokTemp + "|" + miesiacTemp + "|" + dzienTemp + "|" + plecTemp);
-
                 boolean danePoprawne = true;
+                String pesel = "";
+                String rokTemp = "";
+                String miesiacTemp = "";
+                String dzienTemp = "";
+                String plecTemp = "";
+
+                rokTemp = rok.getText().toString().substring(2, 4);
+                miesiacTemp = miesiac.getText().toString();
+                dzienTemp = dzien.getText().toString();
+                plecTemp = plec.getText().toString().toUpperCase();
+
+                Log.d("res", rokTemp + "|" + miesiacTemp + "|" + dzienTemp + "|" + plecTemp);
 
                 if(Integer.valueOf(rok.getText().toString()) < 1900 || Integer.valueOf(rok.getText().toString()) > 2100){
                     danePoprawne = false;
-                    pesel="rok";
                 }
                 if(Integer.valueOf(miesiacTemp) < 1 || Integer.valueOf(miesiacTemp) > 12){
                     danePoprawne = false;
-                    pesel="mies";
                 }
                 if(Integer.valueOf(dzienTemp) < 1 || Integer.valueOf(dzienTemp) > 31){
                     danePoprawne = false;
-                    pesel="dzien";
                 }
 
                 if(plecTemp.equals("K") || plecTemp.equals("M")){
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     danePoprawne = false;
-                    pesel="plec";
                 }
 
                 if(danePoprawne) {
@@ -135,40 +135,38 @@ public class MainActivity extends AppCompatActivity {
                     int p9 = Integer.parseInt(pesel.substring(8, 9));
                     int p10 = Integer.parseInt(pesel.substring(9, 10));
 
+                    Log.d("res", "liczby: " + p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 + p10);
+
                     int kontrolna_temp = 0;
                     kontrolna_temp += p1 * 1;
-                    if (p2 * 3 > 9) {
-                        kontrolna_temp += p2*3 % 10;
-                    }
-                    if (p3 * 7 > 9) {
-                        kontrolna_temp += p3*7 % 10;
-                    }
-                    if (p4 * 9 > 9) {
-                        kontrolna_temp += p4*9 % 10;
-                    }
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p2*3 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p3*7 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p4*9 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
                     kontrolna_temp += p5 * 1;
-                    if (p6 * 3 > 9) {
-                        kontrolna_temp += p6*3 % 10;
-                    }
-                    if (p7 * 7 > 9) {
-                        kontrolna_temp += p7*7 % 10;
-                    }
-                    if (p8 * 9 > 9) {
-                        kontrolna_temp += p8*9 % 10;
-                    }
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p6*3 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p7*7 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p8*9 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
                     kontrolna_temp += p9 * 1;
-                    if (p10 * 3 > 9) {
-                        kontrolna_temp += p10*3 % 10;
-                    }
-                    if (kontrolna_temp > 9) {
-                        kontrolna_temp = kontrolna_temp % 10;
-                    }
-                    int kontrolna = 10 - kontrolna_temp;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    kontrolna_temp += p10*3 % 10;
+                    Log.d("control", String.valueOf(kontrolna_temp));
+                    int kontrolna = 10 - kontrolna_temp%10;
                     if (kontrolna == 10) {
                         kontrolna = 0;
                     }
 
                     pesel += String.valueOf(kontrolna);
+                }
+                else{
+                    pesel="bledne dane";
                 }
 
                 wynik.setText(pesel);
