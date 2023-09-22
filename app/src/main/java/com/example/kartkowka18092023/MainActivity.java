@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button genBtn;
@@ -45,31 +48,71 @@ public class MainActivity extends AppCompatActivity {
                 String dzienTemp = "";
                 String plecTemp = "";
 
-                rokTemp = rok.getText().toString().substring(2, 4);
-                miesiacTemp = miesiac.getText().toString();
-                dzienTemp = dzien.getText().toString();
-                plecTemp = plec.getText().toString().toUpperCase();
+                try{
+                    rokTemp = rok.getText().toString().substring(2, 4);
+                    miesiacTemp = miesiac.getText().toString();
+                    dzienTemp = dzien.getText().toString();
+                    plecTemp = plec.getText().toString().toUpperCase();
 
-                Log.d("res", rokTemp + "|" + miesiacTemp + "|" + dzienTemp + "|" + plecTemp);
-
-                if(Integer.valueOf(rok.getText().toString()) < 1900 || Integer.valueOf(rok.getText().toString()) > 2100){
-                    danePoprawne = false;
+                    Log.d("res", rokTemp + "|" + miesiacTemp + "|" + dzienTemp + "|" + plecTemp);
                 }
-                if(Integer.valueOf(miesiacTemp) < 1 || Integer.valueOf(miesiacTemp) > 12){
+                catch(Exception e){
                     danePoprawne = false;
-                }
-                if(Integer.valueOf(dzienTemp) < 1 || Integer.valueOf(dzienTemp) > 31){
-                    danePoprawne = false;
+                    Log.d("error", e.toString());
                 }
 
-                if(plecTemp.equals("K") || plecTemp.equals("M")){
-                    danePoprawne = true;
+                if(danePoprawne){
+                    int year = Integer.parseInt(rok.getText().toString());
+                    Log.d("test", String.valueOf(year));
+                    if(Integer.parseInt(rok.getText().toString()) < 1900 || Integer.parseInt(rok.getText().toString()) > 2100){
+                        danePoprawne = false;
+                    }
+                    if(Integer.valueOf(miesiacTemp) < 1 || Integer.valueOf(miesiacTemp) > 12){
+                        danePoprawne = false;
+                    }
+                    if(Integer.valueOf(dzienTemp) < 1 || Integer.valueOf(dzienTemp) > 31){
+                        danePoprawne = false;
+                    }
                 }
-                else{
-                    danePoprawne = false;
+
+                if(danePoprawne){
+                    if(plecTemp.equals("K") || plecTemp.equals("M")){
+                        danePoprawne = true;
+                    }
+                    else{
+                        danePoprawne = false;
+                    }
+                }
+
+                if(danePoprawne){
+                    Integer[] miesiace_31_dni_arr = {1,3,5,7,8,10,12};
+                    List<Integer> miesiace_31_dni_list = Arrays.asList(miesiace_31_dni_arr);
+                    if(!miesiace_31_dni_list.contains(Integer.valueOf(miesiacTemp))){
+                        if(Integer.valueOf(miesiacTemp) != 2){
+                            if(Integer.valueOf(dzienTemp) > 30){
+                                danePoprawne = false;
+                            }
+                        }
+                        else{
+                            if((Integer.valueOf(rok.getText().toString())%4 == 0 && Integer.valueOf(rok.getText().toString())%100 != 0) || (Integer.valueOf(rok.getText().toString())%100 == 0 && Integer.valueOf(rok.getText().toString())%400 == 0)){
+                                if(Integer.valueOf(dzienTemp) > 29){
+                                    danePoprawne = false;
+                                }
+                            }
+                            else{
+                                if(Integer.valueOf(dzienTemp) > 28){
+                                    danePoprawne = false;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if(danePoprawne) {
+                    if(dzienTemp.length() == 1){
+                        String temp = dzienTemp;
+                        dzienTemp = "0"+temp;
+                    }
                     pesel += rokTemp;
                     if (Integer.parseInt(rok.getText().toString()) < 2000) {
                         if (miesiacTemp.length() == 1) {

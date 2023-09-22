@@ -11,32 +11,40 @@
     <EditText
         android:id="@+id/dzien"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:minWidth="48dp"
         android:inputType="number"
-        android:hint="dzień"/>
+        android:hint="dzień"
+        android:maxLength="2"/>
 
     <EditText
         android:id="@+id/miesiac"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:layout_height="48dp"
         android:inputType="number"
         android:hint="miesiąc"
+        android:maxLength="2"
         />
 
     <EditText
         android:id="@+id/rok"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:layout_height="48dp"
         android:inputType="number"
         android:hint="rok"
+        android:maxLength="4"
         />
 
     <EditText
         android:id="@+id/plec"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:layout_height="48dp"
         android:inputType="text"
-        android:hint="płeć"/>
+        android:hint="płeć"
+        android:maxLength="1"/>
 
     <Button
         android:id="@+id/generateBtn"
